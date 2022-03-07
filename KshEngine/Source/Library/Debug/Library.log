@@ -1,0 +1,30 @@
+﻿  Game.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(7679,48): warning C5039: 'TpSetCallbackCleanupGroup': -EHc 아래의 'extern "C"' 함수로 전달되는 잠재적인 throw 함수에 대한 포인터 또는 참조입니다. 이 함수가 예외를 throw하는 경우 정의되지 않은 동작이 발생할 수 있습니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10326,22): warning C4668: '_WIN32_WINNT_WIN10_TH2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10332,22): warning C4668: '_WIN32_WINNT_WIN10_RS1'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10337,22): warning C4668: '_WIN32_WINNT_WIN10_TH2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10341,22): warning C4668: '_WIN32_WINNT_WIN10_TH2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10348,22): warning C4668: '_WIN32_WINNT_WIN10_RS2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10358,22): warning C4668: '_WIN32_WINNT_WIN10_RS2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10362,22): warning C4668: '_WIN32_WINNT_WIN10_TH2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10367,22): warning C4668: '_WIN32_WINNT_WIN10_RS3'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10374,22): warning C4668: '_WIN32_WINNT_WIN10_RS4'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10377,22): warning C4668: '_WIN32_WINNT_WIN10_RS1'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10380,22): warning C4668: '_WIN32_WINNT_WIN10_RS4'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10385,22): warning C4668: '_WIN32_WINNT_WIN10_RS1'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10388,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10588,22): warning C4668: '_WIN32_WINNT_WIN10_RS2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(10612,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(14093,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(14296,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(14399,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(14495,21): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(14599,22): warning C4668: '_WIN32_WINNT_WIN10_RS5'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15350,23): warning C4668: '_WIN32_WINNT_WIN10_RS2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15406,22): warning C4668: '_WIN32_WINNT_WIN10_RS2'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15525,22): warning C4668: '_WIN32_WINNT_WIN10_RS3'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15675,22): warning C4668: '_WIN32_WINNT_WIN10_RS4'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15688,22): warning C4668: '_WIN32_WINNT_WIN10_RS4'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winioctl.h(15916,22): warning C4668: '_WIN32_WINNT_WIN10_RS1'은(는) 전처리기 매크로로 정의되어 있지 않으므로 '#if/#elif'에 해당하는 '0'으로 바뀝니다.
+  Library.vcxproj -> C:\Users\Kang Suhan\Desktop\2022년 1학기\게임 그래픽 프로그래밍\KshEngine\Build\Debug\Libraryd.lib
+          1개 파일이 복사되었습니다.
