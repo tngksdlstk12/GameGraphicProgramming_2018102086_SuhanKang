@@ -1,7 +1,7 @@
 /*+===================================================================
   File:      MAIN.CPP
 
-  Summary:   This application serves as a test code for the project
+  Summary:   This application demonstrates creating a Direct3D 11 device
 
   Origin:    http://msdn.microsoft.com/en-us/library/windows/apps/ff729718.aspx
 
@@ -36,7 +36,49 @@
 -----------------------------------------------------------------F-F*/
 INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ INT nCmdShow)
 {
-  library::PrintHi();
+    /*--------------------------------------------------------------------
+      TODO: Unreferenced parameters (remove the comment)
+    --------------------------------------------------------------------*/
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+    /*--------------------------------------------------------------------
+      TODO: Initialization (remove the comment)
+    --------------------------------------------------------------------*/
 
-  return 0;
+    if (FAILED(library::InitWindow(hInstance, nCmdShow))) {
+
+        return 0;
+    }
+
+    if (FAILED(library::InitDevice())) {
+        library::CleanupDevice();
+        return 0;
+    }
+        
+
+    // Main message loop
+    MSG msg = { 0 };
+
+    /*--------------------------------------------------------------------
+      TODO: Main message loop (remove the comment)
+    --------------------------------------------------------------------*/
+    while (WM_QUIT != msg.message)
+    {
+        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        else
+        {
+            library::Render();  // Do some rendering
+        }
+    }
+    /*--------------------------------------------------------------------
+      TODO: Destroy (remove the comment)
+    --------------------------------------------------------------------*/
+
+    library::CleanupDevice();
+
+    return static_cast<INT>(msg.wParam);
 }
