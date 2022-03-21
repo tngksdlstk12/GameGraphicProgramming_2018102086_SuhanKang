@@ -201,10 +201,10 @@ namespace library
 
     void CleanupDevice()
     {
-        if (g_pRenderTargetView) g_pRenderTargetView->Release();
-        if (g_pSwapChain) g_pSwapChain->Release();
-        if (g_pImmediateContext) g_pImmediateContext->Release();
-        if (g_pd3dDevice) g_pd3dDevice->Release();
+        if (g_pRenderTargetView) g_pRenderTargetView.Reset();
+        if (g_pSwapChain) g_pSwapChain.Reset();
+        if (g_pImmediateContext) g_pImmediateContext.Reset();
+        if (g_pd3dDevice) g_pd3dDevice.Reset();
     }
 
 
