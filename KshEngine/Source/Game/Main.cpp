@@ -1,9 +1,10 @@
 /*+===================================================================
   File:      MAIN.CPP
 
-  Summary:   This application demonstrates creating a Direct3D 11 device
+  Summary:   This application demonstrates creating a Direct3D 11 
+             device in a object-oriented fashion
 
-  Origin:    http://msdn.microsoft.com/en-us/library/windows/apps/ff729718.aspx
+  Origin:    https://docs.microsoft.com/en-us/previous-versions//ff729719(v=vs.85)
 
   Originally created by Microsoft Corporation under MIT License
   © 2022 Kyung Hee University
@@ -11,13 +12,15 @@
 
 #include "Common.h"
 
+#include <memory>
+
 #include "Game/Game.h"
 
 /*F+F+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   Function: wWinMain
 
-  Summary:  Entry point to the program. Initializes everything and 
-            goes into a message processing loop. Idle time is used to 
+  Summary:  Entry point to the program. Initializes everything and
+            goes into a message processing loop. Idle time is used to
             render the scene.
 
   Args:     HINSTANCE hInstance
@@ -25,10 +28,10 @@
             HINSTANCE hPrevInstance
               Has no meaning.
             LPWSTR lpCmdLine
-              Contains the command-line arguments as a Unicode 
+              Contains the command-line arguments as a Unicode
               string
             INT nCmdShow
-              Flag that says whether the main application window 
+              Flag that says whether the main application window
               will be minimized, maximized, or shown normally
 
   Returns:  INT
@@ -36,49 +39,15 @@
 -----------------------------------------------------------------F-F*/
 INT WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ INT nCmdShow)
 {
-    /*--------------------------------------------------------------------
-      TODO: Unreferenced parameters (remove the comment)
-    --------------------------------------------------------------------*/
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-    /*--------------------------------------------------------------------
-      TODO: Initialization (remove the comment)
-    --------------------------------------------------------------------*/
 
-    if (FAILED(library::InitWindow(hInstance, nCmdShow))) {
+    std::unique_ptr<library::Game> game = std::make_unique<library::Game>(L"Game Graphics Programming Lab 02: Object Oriented Design");
 
-        return 0;
-    }
-
-    if (FAILED(library::InitDevice())) {
-        library::CleanupDevice();
-        return 0;
-    }
-        
-
-    // Main message loop
-    MSG msg = { 0 };
-
-    /*--------------------------------------------------------------------
-      TODO: Main message loop (remove the comment)
-    --------------------------------------------------------------------*/
-    while (WM_QUIT != msg.message)
+    if (FAILED(game->Initialize(hInstance, nCmdShow)))
     {
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-        else
-        {
-            library::Render();  // Do some rendering
-        }
+        return 0;
     }
-    /*--------------------------------------------------------------------
-      TODO: Destroy (remove the comment)
-    --------------------------------------------------------------------*/
 
-    library::CleanupDevice();
-
-    return static_cast<INT>(msg.wParam);
+    return game->Run();
 }
