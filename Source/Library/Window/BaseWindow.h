@@ -131,11 +131,8 @@ namespace library
       TODO: BaseWindow<DerivedType>::BaseWindow definition (remove the comment)
     --------------------------------------------------------------------*/
     template <class DerivedType>
-    BaseWindow<DerivedType>::BaseWindow() {
+    BaseWindow<DerivedType>::BaseWindow(): m_hInstance(nullptr), m_hWnd(nullptr), m_pszWindowName(nullptr){
 
-        HINSTANCE m_hInstance = nullptr;
-        HWND m_hWnd = nullptr;
-        LPCWSTR m_pszWindowName = L"";
     }
 
 
@@ -232,14 +229,11 @@ namespace library
         RECT rc = { 0, 0, 800, 600 };
         AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-        DerivedType* pState = new (std::nothrow) DerivedType;
-        if (pState == NULL)
-            return 0;
 
-        m_hWnd = CreateWindowEx(0,m_pszWindowName, GetWindowClassName(),
+        m_hWnd = CreateWindowEx(0, GetWindowClassName(), m_pszWindowName,
             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
             CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-            pState);
+            this);
 
 
         if (!m_hWnd)
