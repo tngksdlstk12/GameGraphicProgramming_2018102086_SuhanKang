@@ -18,14 +18,27 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::Initialize definition (remove the comment)
-    --------------------------------------------------------------------*/
 
     HRESULT MainWindow::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow, _In_ PCWSTR pszWindowName){
-        HRESULT hr  = BaseWindow::initialize(hInstance, nCmdShow, pszWindowName, CS_HREDRAW | CS_VREDRAW,
-            0, 0, 800, 600, nullptr, nullptr);
-        return hr;
+        RECT rc = { 0, 0, 800, 600 };
+        AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+        HRESULT hr = initialize(
+            hInstance,
+            nCmdShow,
+            pszWindowName,
+            WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, CW_USEDEFAULT,
+            rc.right - rc.left,
+            rc.bottom - rc.top,
+            nullptr,
+            nullptr
+        );
+        if (FAILED(hr))
+        {
+            return hr;
+        }
+
+        return S_OK;
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -36,12 +49,9 @@ namespace library
       Returns:  PCWSTR
                   Name of the window class
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::GetWindowClassName definition (remove the comment)
-    --------------------------------------------------------------------*/
 
     PCWSTR MainWindow::GetWindowClassName() const {
-        return m_pszWindowName;
+        return L"MainWindow";
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -59,9 +69,6 @@ namespace library
       Returns:  LRESULT
                   Integer value that your program returns to Windows
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: MainWindow::HandleMessage definition (remove the comment)
-    --------------------------------------------------------------------*/
     LRESULT MainWindow::HandleMessage(_In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam) {
 
         PAINTSTRUCT ps;

@@ -12,16 +12,12 @@ namespace library
 
 	  Modifies: [m_pszGameName, m_mainWindow, m_renderer].
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Game::Game definition (remove the comment)
-    --------------------------------------------------------------------*/
 
-	Game::Game(_In_ PCWSTR pszGameName) {
-		m_pszGameName = pszGameName;
-		m_mainWindow = std::make_unique<MainWindow>();
-		m_renderer = std::make_unique<Renderer>();
-
-	}
+	Game::Game(_In_ PCWSTR pszGameName) :
+		m_pszGameName(pszGameName),
+		m_mainWindow(std::make_unique<MainWindow>()),
+		m_renderer(std::make_unique<Renderer>())
+	{ }
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
 	  Method:   Game::Initialize
@@ -39,19 +35,17 @@ namespace library
 	  Returns:  HRESULT
 	  			Status code
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Game::Initialize definition (remove the comment)
-    --------------------------------------------------------------------*/
 	HRESULT Game::Initialize(_In_ HINSTANCE hInstance, _In_ INT nCmdShow) {
 
-		HRESULT hr;
-		hr = m_mainWindow->Initialize(hInstance, nCmdShow, m_pszGameName);
+		HRESULT hr= m_mainWindow->Initialize(hInstance, nCmdShow, m_pszGameName);
 
 		if (FAILED(hr)) {
-			return 0;
+			return hr;
 		}
 		hr = m_renderer->Initialize(m_mainWindow->GetWindow());
-		return hr;
+		if (FAILED(hr))
+			return hr;
+		return S_OK;
 	}
 
 	/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -62,9 +56,6 @@ namespace library
 	  Returns:  INT
 				  Status code to return to the operating system
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Game::Run definition (remove the comment)
-    --------------------------------------------------------------------*/
 
 	INT Game::Run() {
 		MSG msg = { 0 };
@@ -92,9 +83,6 @@ namespace library
 	  Returns:  PCWSTR
 				  Name of the game
 	M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: Game::GetGameName definition (remove the comment)
-    --------------------------------------------------------------------*/
 	PCWSTR Game::GetGameName() const {
 		return m_pszGameName;
 	}

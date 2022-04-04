@@ -31,6 +31,12 @@
     <Filter Include="헤더 파일\Window">
       <UniqueIdentifier>{e7645126-93ae-4d04-9370-8187c56f6bb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Shaders">
+      <UniqueIdentifier>{92e816b7-1bff-42b8-9760-f373b07c4ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Shaders">
+      <UniqueIdentifier>{b299536e-b80b-4dc5-83ba-d31c07d39d29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -72,5 +78,18 @@
     <ClCompile Include="Window\MainWindow.cpp">
       <Filter>소스 파일\Window</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\Lab03_PS.hlsl">
+      <Filter>소스 파일\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\Lab03_VS.hlsl">
+      <Filter>소스 파일\Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Lab03.fxh">
+      <Filter>헤더 파일\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
