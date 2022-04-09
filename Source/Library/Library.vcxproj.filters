@@ -34,7 +34,7 @@
     <Filter Include="소스 파일\Shaders">
       <UniqueIdentifier>{92e816b7-1bff-42b8-9760-f373b07c4ed6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Shaders">
+    <Filter Include="헤더 파일\Shader">
       <UniqueIdentifier>{b299536e-b80b-4dc5-83ba-d31c07d39d29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -57,6 +57,21 @@
     <ClInclude Include="Window\MainWindow.h">
       <Filter>헤더 파일\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\DataTypes.h">
+      <Filter>헤더 파일\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Renderable.h">
+      <Filter>헤더 파일\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\VertexShader.h">
+      <Filter>헤더 파일\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\PixelShader.h">
+      <Filter>헤더 파일\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\Shader.h">
+      <Filter>헤더 파일\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -78,18 +93,17 @@
     <ClCompile Include="Window\MainWindow.cpp">
       <Filter>소스 파일\Window</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\Lab03_PS.hlsl">
+    <ClCompile Include="Renderer\Renderable.cpp">
+      <Filter>소스 파일\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\PixelShader.cpp">
       <Filter>소스 파일\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Shaders\Lab03_VS.hlsl">
+    </ClCompile>
+    <ClCompile Include="Shader\Shader.cpp">
       <Filter>소스 파일\Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Lab03.fxh">
-      <Filter>헤더 파일\Shaders</Filter>
-    </None>
+    </ClCompile>
+    <ClCompile Include="Shader\VertexShader.cpp">
+      <Filter>소스 파일\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
