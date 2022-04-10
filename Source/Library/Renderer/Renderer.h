@@ -13,6 +13,7 @@
 
 #include "Common.h"
 
+#include "Camera/Camera.h"
 #include "Renderer/DataTypes.h"
 #include "Renderer/Renderable.h"
 #include "Shader/PixelShader.h"
@@ -49,6 +50,10 @@ namespace library
                   Constructor.
                 ~Renderer
                   Destructor.
+                HandleInput
+                  Handles the keyboard / mouse input
+                Update
+                  Update the renderables each frame
     C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
     class Renderer final
     {
@@ -65,6 +70,7 @@ namespace library
         HRESULT AddVertexShader(_In_ PCWSTR pszVertexShaderName, _In_ const std::shared_ptr<VertexShader>& vertexShader);
         HRESULT AddPixelShader(_In_ PCWSTR pszPixelShaderName, _In_ const std::shared_ptr<PixelShader>& pixelShader);
 
+        void HandleInput(_In_ const DirectionsInput& directions, _In_ const MouseRelativeMovement& mouseRelativeMovement, _In_ FLOAT deltaTime);
         void Update(_In_ FLOAT deltaTime);
         void Render();
 
@@ -85,8 +91,9 @@ namespace library
         ComPtr<ID3D11RenderTargetView> m_renderTargetView;
         ComPtr<ID3D11Texture2D> m_depthStencil;
         ComPtr<ID3D11DepthStencilView> m_depthStencilView;
-        XMMATRIX m_view;
         XMMATRIX m_projection;
+
+        Camera m_camera;
 
         std::unordered_map<PCWSTR, std::shared_ptr<Renderable>> m_renderables;
         std::unordered_map<PCWSTR, std::shared_ptr<VertexShader>> m_vertexShaders;

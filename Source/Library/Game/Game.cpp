@@ -77,11 +77,18 @@ namespace library
             {
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
+                
             }
             else
             {
                 QueryPerformanceCounter(&EndingTime);
                 elapsedTime = (EndingTime.QuadPart - StartingTime.QuadPart) / (FLOAT)Frequency.QuadPart;
+                m_renderer->HandleInput(
+                    m_mainWindow->GetDirections(),
+                    m_mainWindow->GetMouseRelativeMovement(),
+                    elapsedTime
+                );
+                m_mainWindow->ResetMouseMovement();
                 m_renderer->Update(elapsedTime); 
                 QueryPerformanceCounter(&StartingTime);
                 m_renderer->Render();
