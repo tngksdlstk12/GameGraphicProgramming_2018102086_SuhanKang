@@ -132,10 +132,7 @@ namespace library
         }
         m_yaw += mouseRelativeMovement.X *deltaTime* m_rotationSpeed;
         m_pitch += mouseRelativeMovement.Y * deltaTime * m_rotationSpeed;
-        if (m_pitch > 1.57)
-            m_pitch = 1.57;
-        else if (m_pitch < -1.57)
-            m_pitch = -1.57;
+        m_pitch = std::clamp(m_pitch, -1.57f, 1.57f);
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
