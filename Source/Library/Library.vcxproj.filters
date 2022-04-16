@@ -43,6 +43,12 @@
     <Filter Include="소스 파일\Camera">
       <UniqueIdentifier>{1c1799a0-e339-4a0a-ae2d-95b52e2c668a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Texture">
+      <UniqueIdentifier>{ab003bf0-64e0-459d-b839-f3a630349210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Texture">
+      <UniqueIdentifier>{569a3cf5-d09f-4698-a2eb-5489ba8ad5a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -81,6 +87,9 @@
     <ClInclude Include="Camera\Camera.h">
       <Filter>헤더 파일\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\DDSTextureLoader.h">
+      <Filter>헤더 파일\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -116,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Camera\Camera.cpp">
       <Filter>소스 파일\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\DDSTextureLoader.cpp">
+      <Filter>소스 파일\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

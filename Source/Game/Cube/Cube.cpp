@@ -1,4 +1,4 @@
-#include "Cube/MyCube.h"
+#include "Cube/Cube.h"
 
 /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
   Method:   Cube::Cube
@@ -8,7 +8,7 @@
   Args:     const std::filesystem::path& textureFilePath
               Path to the texture to use
 M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-MyCube::MyCube(const std::filesystem::path& textureFilePath) :BaseCube(textureFilePath) {
+Cube::Cube(const std::filesystem::path& textureFilePath) :BaseCube(textureFilePath){
 
 }
 
@@ -22,10 +22,10 @@ MyCube::MyCube(const std::filesystem::path& textureFilePath) :BaseCube(textureFi
 
   Modifies: [m_world].
 M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-void MyCube::Update(_In_ FLOAT deltaTime)
+void Cube::Update(_In_ FLOAT deltaTime)
 {
     static FLOAT s_totalTime = 0.0f;
     s_totalTime += deltaTime;
 
-    m_world = XMMatrixTranslation(5.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(-s_totalTime)*XMMatrixRotationX(s_totalTime);
+    m_world = XMMatrixTranslation(0.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(s_totalTime);
 }

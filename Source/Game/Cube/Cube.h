@@ -1,4 +1,4 @@
-﻿/*+===================================================================
+/*+===================================================================
   File:      CUBE1.H
 
   Summary:   Cube header file contains declarations of Cube class
@@ -27,15 +27,15 @@
             ~Cube
               Destructor.
 C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
-class MyCube : public BaseCube
+class Cube : public BaseCube
 {
 public:
-    MyCube(const std::filesystem::path& textureFilePath);
-    MyCube(const MyCube& other) = delete;
-    MyCube(MyCube&& other) = delete;
-    MyCube& operator=(const MyCube& other) = delete;
-    MyCube& operator=(MyCube&& other) = delete;
-    ~MyCube() = default;
+    Cube(const std::filesystem::path& textureFilePath);
+    Cube(const Cube& other) = delete;
+    Cube(Cube&& other) = delete;
+    Cube& operator=(const Cube& other) = delete;
+    Cube& operator=(Cube&& other) = delete;
+    ~Cube() = default;
 
     virtual void Update(_In_ FLOAT deltaTime) override;
 };

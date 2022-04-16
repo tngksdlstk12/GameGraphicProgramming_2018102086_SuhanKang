@@ -11,17 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CenterCube.cpp" />
     <ClCompile Include="Cube\BaseCube.cpp" />
+    <ClCompile Include="Cube\Cube.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MyCube.cpp" />
-    <ClCompile Include="SatelliteCube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube\BaseCube.h" />
-    <ClInclude Include="CenterCube.h" />
+    <ClInclude Include="Cube\Cube.h" />
     <ClInclude Include="MyCube.h" />
-    <ClInclude Include="SatelliteCube.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\PS.hlsl" />
@@ -29,6 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Shaders.fxh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="seafloor.dds" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

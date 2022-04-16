@@ -33,10 +33,7 @@
     <ClCompile Include="Cube\BaseCube.cpp">
       <Filter>소스 파일\Cube</Filter>
     </ClCompile>
-    <ClCompile Include="CenterCube.cpp">
-      <Filter>소스 파일\Cube</Filter>
-    </ClCompile>
-    <ClCompile Include="SatelliteCube.cpp">
+    <ClCompile Include="Cube\Cube.cpp">
       <Filter>소스 파일\Cube</Filter>
     </ClCompile>
     <ClCompile Include="MyCube.cpp">
@@ -60,14 +57,14 @@
     <ClInclude Include="Cube\BaseCube.h">
       <Filter>헤더 파일\Cube</Filter>
     </ClInclude>
-    <ClInclude Include="CenterCube.h">
-      <Filter>헤더 파일\Cube</Filter>
-    </ClInclude>
-    <ClInclude Include="SatelliteCube.h">
+    <ClInclude Include="Cube\Cube.h">
       <Filter>헤더 파일\Cube</Filter>
     </ClInclude>
     <ClInclude Include="MyCube.h">
       <Filter>헤더 파일\Cube</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="seafloor.dds" />
   </ItemGroup>
 </Project>

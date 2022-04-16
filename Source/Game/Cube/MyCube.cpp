@@ -1,4 +1,4 @@
-#include "Cube/MyCube.h"
+#include "MyCube.h"
 
 /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
   Method:   Cube::Cube
@@ -27,5 +27,5 @@ void MyCube::Update(_In_ FLOAT deltaTime)
     static FLOAT s_totalTime = 0.0f;
     s_totalTime += deltaTime;
 
-    m_world = XMMatrixTranslation(5.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(-s_totalTime)*XMMatrixRotationX(s_totalTime);
+    m_world = XMMatrixTranslation(0.0f, XMScalarSin(s_totalTime), 0.0f) * XMMatrixRotationY(s_totalTime);
 }

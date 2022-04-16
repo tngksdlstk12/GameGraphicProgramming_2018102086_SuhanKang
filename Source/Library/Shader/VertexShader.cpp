@@ -18,9 +18,6 @@ namespace library
 
       Modifies: [m_vertexShader].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: VertexShader::VertexShader definition (remove the comment)
-    --------------------------------------------------------------------*/
     VertexShader::VertexShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel):
         Shader(pszFileName,pszEntryPoint, pszShaderModel), m_vertexShader(nullptr){}
 
@@ -35,9 +32,6 @@ namespace library
       Returns:  HRESULT
                   Status code
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: VertexShader::Initialize definition (remove the comment)
-    --------------------------------------------------------------------*/
     HRESULT VertexShader::Initialize(_In_ ID3D11Device* pDevice) {
         //compile create vertex shader
         ComPtr<ID3DBlob> pVSBlob;
@@ -53,13 +47,23 @@ namespace library
         }
         //input layout object ¸¸µé±â
         D3D11_INPUT_ELEMENT_DESC aLayouts[] = {
-            {"POSITION",
-            0,
-            DXGI_FORMAT_R32G32B32_FLOAT,
-            0,
-            0,
-            D3D11_INPUT_PER_VERTEX_DATA,
-            0},
+            {
+                .SemanticName = "POSITION",
+                .SemanticIndex = 0u,
+                .Format = DXGI_FORMAT_R32G32B32_FLOAT,
+                .InputSlot= 0u,
+                .AlignedByteOffset = 0u,
+                .InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA,
+                .InstanceDataStepRate = 0u},
+            {
+                .SemanticName = "TEXCOORD",
+                .SemanticIndex = 0u,
+                .Format = DXGI_FORMAT_R32G32_FLOAT,
+                .InputSlot = 0u,
+                .AlignedByteOffset = 12u,
+                .InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA,
+                .InstanceDataStepRate = 0u
+            }
         };
         UINT uNumElements = ARRAYSIZE(aLayouts);
 
@@ -86,9 +90,6 @@ namespace library
       Returns:  ComPtr<ID3D11VertexShader>&
                   Vertex shader. Could be a nullptr
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: VertexShader::GetVertexShader definition (remove the comment)
-    --------------------------------------------------------------------*/
     ComPtr<ID3D11VertexShader>& VertexShader::GetVertexShader() {
         return m_vertexShader;
     }
@@ -101,9 +102,6 @@ namespace library
       Returns:  ComPtr<ID3D11InputLayout>&
                   Vertex input layout
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    /*--------------------------------------------------------------------
-      TODO: VertexShader::GetVertexLayout definition (remove the comment)
-    --------------------------------------------------------------------*/
     ComPtr<ID3D11InputLayout>& VertexShader::GetVertexLayout() {
         return m_vertexLayout;
     }
