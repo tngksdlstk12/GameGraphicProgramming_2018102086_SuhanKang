@@ -19,7 +19,7 @@ namespace library
       Modifies: [m_vertexShader].
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     VertexShader::VertexShader(_In_ PCWSTR pszFileName, _In_ PCSTR pszEntryPoint, _In_ PCSTR pszShaderModel):
-        Shader(pszFileName,pszEntryPoint, pszShaderModel), m_vertexShader(nullptr){}
+        Shader(pszFileName,pszEntryPoint, pszShaderModel), m_vertexShader(nullptr), m_vertexLayout(nullptr) {}
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   VertexShader::Initialize
@@ -36,7 +36,7 @@ namespace library
         //compile create vertex shader
         ComPtr<ID3DBlob> pVSBlob;
         HRESULT hr;
-        hr = Shader::compile(pVSBlob.GetAddressOf());
+        hr = compile(pVSBlob.GetAddressOf());
         if (FAILED(hr)) {
             return hr;
         }
@@ -61,6 +61,15 @@ namespace library
                 .Format = DXGI_FORMAT_R32G32_FLOAT,
                 .InputSlot = 0u,
                 .AlignedByteOffset = 12u,
+                .InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA,
+                .InstanceDataStepRate = 0u
+            },
+            {
+                .SemanticName = "NORMAL",
+                .SemanticIndex = 0u,
+                .Format = DXGI_FORMAT_R32G32B32_FLOAT,
+                .InputSlot = 0u,
+                .AlignedByteOffset = 20u,
                 .InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA,
                 .InstanceDataStepRate = 0u
             }

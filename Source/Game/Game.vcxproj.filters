@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\Cube">
       <UniqueIdentifier>{ded31475-7874-43c9-941a-aaa13b85bb1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Light">
+      <UniqueIdentifier>{8a2c82db-2cdc-4eaf-a189-fbd54754cbce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Light">
+      <UniqueIdentifier>{e6d4bb8b-2841-4706-b5d5-5a69d9901b39}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -36,22 +42,12 @@
     <ClCompile Include="Cube\Cube.cpp">
       <Filter>소스 파일\Cube</Filter>
     </ClCompile>
-    <ClCompile Include="MyCube.cpp">
+    <ClCompile Include="Cube\RotatingCube.cpp">
       <Filter>소스 파일\Cube</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\PS.hlsl">
-      <Filter>소스 파일\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Shaders\VS.hlsl">
-      <Filter>소스 파일\Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Shaders.fxh">
-      <Filter>헤더 파일\Shaders</Filter>
-    </None>
+    <ClCompile Include="Light\RotatingPointLight.cpp">
+      <Filter>소스 파일\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube\BaseCube.h">
@@ -60,11 +56,27 @@
     <ClInclude Include="Cube\Cube.h">
       <Filter>헤더 파일\Cube</Filter>
     </ClInclude>
-    <ClInclude Include="MyCube.h">
+    <ClInclude Include="Cube\RotatingCube.h">
       <Filter>헤더 파일\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Light\RotatingPointLight.h">
+      <Filter>헤더 파일\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="seafloor.dds" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\PhongShaders.fxh">
+      <Filter>헤더 파일\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PS.hlsl">
+      <Filter>소스 파일\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VS.hlsl">
+      <Filter>소스 파일\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
