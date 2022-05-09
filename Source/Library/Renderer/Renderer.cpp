@@ -596,11 +596,16 @@ namespace library
                 0u
             );
             if (it_renderable->second->HasTexture()) {
-                m_immediateContext->PSSetShaderResources(0, 1, it_renderable->second->GetTextureResourceView().GetAddressOf());
-                m_immediateContext->PSSetSamplers(0, 1, it_renderable->second->GetSamplerState().GetAddressOf());
-                
+                for (UINT i = 0; i < it_renderable->second->GetNumMeshes(); i++) {
+                    UINT materialIndex = it_renderable->second->GetMesh(i).uMaterialIndex;
+                    m_immediateContext->PSSetShaderResources(0, 1, it_renderable->second->GetMaterial(materialIndex).pDiffuse->GetTextureResourceView().GetAddressOf());
+                    m_immediateContext->PSSetSamplers(0, 1, it_renderable->second->GetMaterial(materialIndex).pDiffuse->GetSamplerState().GetAddressOf());
+                    m_immediateContext->DrawIndexed(it_renderable->second->GetMesh(i).uNumIndices, it_renderable->second->GetMesh(i).uBaseIndex, it_renderable->second->GetMesh(i).uBaseVertex);
+                }
             }
-            m_immediateContext->DrawIndexed(it_renderable->second->GetNumIndices(), 0, 0);
+            else {
+                m_immediateContext->DrawIndexed(it_renderable->second->GetNumIndices(), 0, 0);
+            }
         }
 
 
@@ -628,7 +633,7 @@ namespace library
         auto it_renderable = m_renderables.find(pszRenderableName);
         if (it_renderable == m_renderables.end())
             return E_FAIL;
-
+            
         auto it_vertexshader = m_vertexShaders.find(pszVertexShaderName);
         if (it_vertexshader == m_vertexShaders.end())
             return E_FAIL;
