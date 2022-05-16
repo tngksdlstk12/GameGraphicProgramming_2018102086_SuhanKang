@@ -61,6 +61,12 @@
     <Filter Include="헤더 파일\Model">
       <UniqueIdentifier>{cb188c77-899e-4f38-8063-56086541383f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{77334fd9-c2c4-4a6a-8e02-f83b9273d0ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Scene">
+      <UniqueIdentifier>{4e7909b7-92ea-48b3-8498-207dc170ea23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -114,6 +120,15 @@
     <ClInclude Include="Texture\WICTextureLoader.h">
       <Filter>헤더 파일\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\InstancedRenderable.h">
+      <Filter>헤더 파일\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Voxel.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico">
@@ -164,6 +179,15 @@
     </ClCompile>
     <ClCompile Include="Texture\WICTextureLoader.cpp">
       <Filter>소스 파일\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\InstancedRenderable.cpp">
+      <Filter>소스 파일\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Voxel.cpp">
+      <Filter>소스 파일\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
