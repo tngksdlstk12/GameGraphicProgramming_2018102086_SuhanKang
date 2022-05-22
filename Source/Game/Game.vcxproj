@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\PhongShaders.fxh" />
+    <None Include="Shaders\SkinningShaders.fxh" />
     <None Include="Shaders\VoxelShaders.fxh" />
   </ItemGroup>
   <ItemGroup>
