@@ -1,12 +1,11 @@
 #include "Model/Model.h"
 
-#include "assimp/Importer.hpp"
-#include "assimp/scene.h"		
-#include "assimp/postprocess.h"
+#include "assimp/Importer.hpp"	// C++ importer interface
+#include "assimp/scene.h"		// output data structure
+#include "assimp/postprocess.h"	// post processing flags
 
 namespace library
 {
-
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   ConvertMatrix
 
@@ -126,7 +125,7 @@ namespace library
             XMVECTOR det = XMMatrixDeterminant(rootNodeTransform);
             m_globalInverseTransform = XMMatrixInverse(&det, rootNodeTransform);
             hr = initFromScene(pDevice, pImmediateContext, m_pScene, m_filePath);
-            if(FAILED(hr))
+            if (FAILED(hr))
                 return hr;
         }
         else
@@ -308,7 +307,7 @@ namespace library
                     Pointer to an assimp scene object that contains the
                     mesh information
      M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    void Model::countVerticesAndIndices(_Inout_ UINT& uOutNumVertices, _Inout_ UINT& uOutNumIndices, _In_ const aiScene* pScene){   
+    void Model::countVerticesAndIndices(_Inout_ UINT& uOutNumVertices, _Inout_ UINT& uOutNumIndices, _In_ const aiScene* pScene) {
         for (UINT i = 0u; i < pScene->mNumMeshes; i++)
         {
             m_aMeshes[i].uMaterialIndex = pScene->mMeshes[i]->mMaterialIndex;
@@ -330,7 +329,7 @@ namespace library
                     Pointer to an assimp animation object
                   PCSTR pszNodeName
                     Node name to find
-        
+
         Returns:  aiNodeAnim* or nullptr
      M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     const aiNodeAnim* Model::findNodeAnimOrNull(_In_ const aiAnimation* pAnimation, _In_ PCSTR pszNodeName)
@@ -535,44 +534,47 @@ namespace library
         _In_ ID3D11DeviceContext* pImmediateContext,
         _In_ const aiScene* pScene,
         _In_ const std::filesystem::path& filePath
-    ) {
-        UINT numVertices = 0u;
-        UINT numIndices = 0u;
-        m_aMaterials.resize(pScene->mNumMaterials);
+    )
+    {
+        HRESULT hr = S_OK;
+
         m_aMeshes.resize(pScene->mNumMeshes);
-        countVerticesAndIndices(numVertices, numIndices, pScene);
-        reserveSpace(numVertices, numIndices);
+
+        UINT uNumVertices = 0u;
+        UINT uNumIndices = 0u;
+
+        countVerticesAndIndices(uNumVertices, uNumIndices, pScene);
+
+        reserveSpace(uNumVertices, uNumIndices);
+
         initAllMeshes(pScene);
 
-        HRESULT hr = S_OK;
         hr = initMaterials(pDevice, pImmediateContext, pScene, filePath);
         if (FAILED(hr))
+        {
             return hr;
-
-        for (UINT i = 0; i < m_aBoneData.size(); i++) {
-            m_aAnimationData.push_back(
-                AnimationData{
-                    .aBoneIndices = XMUINT4(
-                        m_aBoneData[i].aBoneIds[0],
-                        m_aBoneData[i].aBoneIds[1],
-                        m_aBoneData[i].aBoneIds[2],
-                        m_aBoneData[i].aBoneIds[3]),
-                    .aBoneWeights = XMFLOAT4(
-                        m_aBoneData[i].aWeights[0],
-                        m_aBoneData[i].aWeights[1],
-                        m_aBoneData[i].aWeights[2],
-                        m_aBoneData[i].aWeights[3])
-                });
         }
 
-
-
+        for (size_t i = 0; i < m_aVertices.size(); ++i)
+        {
+            m_aAnimationData.push_back(
+                AnimationData
+                {
+                    .aBoneIndices = XMUINT4(m_aBoneData.at(i).aBoneIds),
+                    .aBoneWeights = XMFLOAT4(m_aBoneData.at(i).aWeights)
+                }
+            );
+        }
 
         hr = initialize(pDevice, pImmediateContext);
         if (FAILED(hr))
+        {
             return hr;
+        }
+
         return hr;
     }
+
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::initMaterials
@@ -608,12 +610,16 @@ namespace library
         {
             const aiMaterial* pMaterial = pScene->mMaterials[i];
 
+            std::string szName = filePath.string() + std::to_string(i);
+            std::wstring pwszName(szName.length(), L' ');
+            std::copy(szName.begin(), szName.end(), pwszName.begin());
+            m_aMaterials.push_back(std::make_shared<Material>(pwszName));
+
             loadTextures(pDevice, pImmediateContext, parentDirectory, pMaterial, i);
         }
 
         return hr;
     }
-
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::initMeshBones
@@ -656,16 +662,16 @@ namespace library
         }
     }
 
-
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::initSingleMesh
 
       Summary:  Initialize single mesh from a given assimp mesh
 
-      Args:     const aiMesh* pMesh
+      Args:     UINT uMeshIndex
+                  Index of mesh
+                const aiMesh* pMesh
                   Point to an assimp mesh object
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-
     void Model::initSingleMesh(_In_ UINT uMeshIndex, _In_ const aiMesh* pMesh) {
         const aiVector3D zero3d(0.0f, 0.0f, 0.0f);
         for (UINT i = 0u; i < pMesh->mNumVertices; ++i) {
@@ -674,13 +680,23 @@ namespace library
             const aiVector3D& texCoord =
                 pMesh->HasTextureCoords(0u) ?
                 pMesh->mTextureCoords[0][i] : zero3d;
+            const aiVector3D& tangent = pMesh->HasTangentsAndBitangents() ?
+                pMesh->mTangents[i] : zero3d;
+            const aiVector3D& bitangent = pMesh->HasTangentsAndBitangents() ?
+                pMesh->mBitangents[i] : zero3d;
 
             m_aVertices.push_back(
                 SimpleVertex
                 {
                     .Position = XMFLOAT3(position.x, position.y, position.z),
                     .TexCoord = XMFLOAT2(texCoord.x, texCoord.y),
-                    .Normal = XMFLOAT3(normal.x, normal.y, normal.z)
+                    .Normal = XMFLOAT3(normal.x, normal.y, normal.z),
+                }
+            );
+            m_aNormalData.push_back(
+                NormalData{
+                    .Tangent = XMFLOAT3(tangent.x, tangent.y,tangent.z),
+                    .Bitangent = XMFLOAT3(bitangent.x, bitangent.y, bitangent.z)
                 }
             );
         }
@@ -694,7 +710,7 @@ namespace library
         }
         initMeshBones(uMeshIndex, pMesh);
     }
-
+    
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::interpolatePosition
 
@@ -827,7 +843,7 @@ namespace library
     )
     {
         HRESULT hr = S_OK;
-        m_aMaterials[uIndex].pDiffuse = nullptr;
+        m_aMaterials[uIndex]->pDiffuse = nullptr;
 
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0)
         {
@@ -844,9 +860,9 @@ namespace library
 
                 std::filesystem::path fullPath = parentDirectory / szPath;
 
-                m_aMaterials[uIndex].pDiffuse = std::make_shared<Texture>(fullPath);
+                m_aMaterials[uIndex]->pDiffuse = std::make_shared<Texture>(fullPath);
 
-                hr = m_aMaterials[uIndex].pDiffuse->Initialize(pDevice, pImmediateContext);
+                hr = m_aMaterials[uIndex]->pDiffuse->Initialize(pDevice, pImmediateContext);
                 if (FAILED(hr))
                 {
                     OutputDebugString(L"Error loading diffuse texture \"");
@@ -891,7 +907,7 @@ namespace library
     )
     {
         HRESULT hr = S_OK;
-        m_aMaterials[uIndex].pSpecular = nullptr;
+        m_aMaterials[uIndex]->pSpecularExponent = nullptr;
 
         if (pMaterial->GetTextureCount(aiTextureType_SHININESS) > 0)
         {
@@ -908,9 +924,9 @@ namespace library
 
                 std::filesystem::path fullPath = parentDirectory / szPath;
 
-                m_aMaterials[uIndex].pSpecular = std::make_shared<Texture>(fullPath);
+                m_aMaterials[uIndex]->pSpecularExponent = std::make_shared<Texture>(fullPath);
 
-                hr = m_aMaterials[uIndex].pSpecular->Initialize(pDevice, pImmediateContext);
+                hr = m_aMaterials[uIndex]->pSpecularExponent->Initialize(pDevice, pImmediateContext);
                 if (FAILED(hr))
                 {
                     OutputDebugString(L"Error loading specular texture \"");
@@ -930,6 +946,64 @@ namespace library
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
+      Method:   Model::loadNormalTexture
+
+      Summary:  Load a normal texture from given path
+
+      Args:     ID3D11Device* pDevice
+                  The Direct3D device to create the buffers
+                ID3D11DeviceContext* pImmediateContext
+                  The Direct3D context to set buffers
+                const std::filesystem::path& parentDirectory
+                  Parent path to the model
+                const aiMaterial* pMaterial
+                  Pointer to an assimp material object
+                UINT uIndex
+                  Index to a material
+    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
+    HRESULT Model::loadNormalTexture(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext, _In_ const std::filesystem::path& parentDirectory, _In_ const aiMaterial* pMaterial, _In_ UINT uIndex)
+    {
+        HRESULT hr = S_OK;
+        m_aMaterials[uIndex]->pNormal = nullptr;
+
+        if (pMaterial->GetTextureCount(aiTextureType_HEIGHT) > 0)
+        {
+            aiString aiPath;
+
+            if (pMaterial->GetTexture(aiTextureType_HEIGHT, 0u, &aiPath, nullptr, nullptr, nullptr, nullptr, nullptr) == AI_SUCCESS)
+            {
+                std::string szPath(aiPath.data);
+
+                if (szPath.substr(0ull, 2ull) == ".\\")
+                {
+                    szPath = szPath.substr(2ull, szPath.size() - 2ull);
+                }
+
+                std::filesystem::path fullPath = parentDirectory / szPath;
+
+                m_aMaterials[uIndex]->pNormal = std::make_shared<Texture>(fullPath);
+                m_bHasNormalMap = true;
+
+                if (FAILED(hr))
+                {
+                    OutputDebugString(L"Error loading normal texture \"");
+                    OutputDebugString(fullPath.c_str());
+                    OutputDebugString(L"\"\n");
+
+                    return hr;
+                }
+
+                OutputDebugString(L"Loaded normal texture \"");
+                OutputDebugString(fullPath.c_str());
+                OutputDebugString(L"\"\n");
+            }
+        }
+
+        return hr;
+    }
+
+
+    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::loadTextures
 
       Summary:  Load a specular texture from given path
@@ -945,13 +1019,7 @@ namespace library
                 UINT uIndex
                   Index to a material
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Model::loadTextures(
-        _In_ ID3D11Device* pDevice,
-        _In_ ID3D11DeviceContext* pImmediateContext,
-        _In_ const std::filesystem::path& parentDirectory,
-        _In_ const aiMaterial* pMaterial,
-        _In_ UINT uIndex
-    )
+    HRESULT Model::loadTextures(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext, _In_ const std::filesystem::path& parentDirectory, _In_ const aiMaterial* pMaterial, _In_ UINT uIndex)
     {
         HRESULT hr = loadDiffuseTexture(pDevice, pImmediateContext, parentDirectory, pMaterial, uIndex);
         if (FAILED(hr))
@@ -965,9 +1033,14 @@ namespace library
             return hr;
         }
 
+        hr = loadNormalTexture(pDevice, pImmediateContext, parentDirectory, pMaterial, uIndex);
+        if (FAILED(hr))
+        {
+            return hr;
+        }
+
         return hr;
     }
-
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
       Method:   Model::readNodeHierarchy
@@ -1004,8 +1077,8 @@ namespace library
         XMMATRIX globalTransformation = nodeTransformation * parentTransform;
         auto it_bone = m_boneNameToIndexMap.find(pNode->mName.C_Str());
         if (it_bone != m_boneNameToIndexMap.end()) {
-            m_aBoneInfo[it_bone->second].FinalTransformation = 
-                m_aBoneInfo[it_bone->second].OffsetMatrix* globalTransformation * m_globalInverseTransform;
+            m_aBoneInfo[it_bone->second].FinalTransformation =
+                m_aBoneInfo[it_bone->second].OffsetMatrix * globalTransformation * m_globalInverseTransform;
         }
 
         for (UINT i = 0; i < pNode->mNumChildren; ++i) {

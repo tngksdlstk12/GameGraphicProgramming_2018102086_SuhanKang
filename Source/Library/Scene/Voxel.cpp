@@ -12,7 +12,7 @@ namespace library
       Args:     const XMFLOAT4& outputColor
                   Color of the voxel
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    Voxel::Voxel(_In_ const XMFLOAT4& outputColor):
+    Voxel::Voxel(_In_ const XMFLOAT4& outputColor) :
         InstancedRenderable(outputColor)
     {}
 
@@ -27,26 +27,38 @@ namespace library
                   Color of the voxel
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
     Voxel::Voxel(_In_ std::vector<InstanceData>&& aInstanceData, _In_ const XMFLOAT4& outputColor) :
-        InstancedRenderable(std::move(aInstanceData),outputColor)
+        InstancedRenderable(std::move(aInstanceData), outputColor)
     {}
 
+    HRESULT Voxel::Initialize(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext)
+    {
+        BasicMeshEntry basicMeshEntry;
+        basicMeshEntry.uNumIndices = NUM_INDICES;
 
-    /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-      Method:   Voxel::Initialize
+        m_aMeshes.push_back(basicMeshEntry);
 
-      Summary:  Initializes a voxel
+        HRESULT hr = initialize(pDevice, pImmediateContext);
+        if (FAILED(hr))
+        {
+            return hr;
+        }
 
-      Args:     ID3D11Device* pDevice
-                  The Direct3D device to create the buffers
-                ID3D11DeviceContext* pImmediateContext
-                  The Direct3D context to set buffers
+        hr = initializeInstance(pDevice);
+        if (FAILED(hr))
+        {
+            return hr;
+        }
 
-      Returns:  HRESULT
-                  Status code
-    M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    HRESULT Voxel::Initialize(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext) {
-        InstancedRenderable::initializeInstance(pDevice);
-        return Renderable::initialize(pDevice, pImmediateContext);
+        if (HasTexture() > 0)
+        {
+            hr = SetMaterialOfMesh(0, 0);
+            if (FAILED(hr))
+            {
+                return hr;
+            }
+        }
+
+        return S_OK;
     }
 
     /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
@@ -57,7 +69,7 @@ namespace library
       Args:     FLOAT deltaTime
                   Elapsed time
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    void Voxel::Update(_In_ FLOAT deltaTime){
+    void Voxel::Update(_In_ FLOAT deltaTime) {
 
     }
 
@@ -65,7 +77,7 @@ namespace library
       Method:   Voxel::GetNumVertices
 
       Summary:  Returns the number of vertices in the voxel
-      
+
       Returns:  UINT
                   Number of vertices
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -77,11 +89,11 @@ namespace library
       Method:   Voxel::GetNumIndices
 
       Summary:  Returns the number of indices in the voxel
-      
+
       Returns:  UINT
                   Number of indices
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    UINT Voxel::GetNumIndices() const{
+    UINT Voxel::GetNumIndices() const {
         return NUM_INDICES;
     }
 
@@ -89,7 +101,7 @@ namespace library
       Method:   Voxel::getVertices
 
       Summary:  Returns the pointer to the vertices data
-      
+
       Returns:  const library::SimpleVertex*
                   Pointer to the vertices data
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
@@ -101,11 +113,12 @@ namespace library
       Method:   Voxel::getIndices
 
       Summary:  Returns the pointer to the indices data
-      
+
       Returns:  const WORD*
                   Pointer to the indices data
     M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
-    const WORD* Voxel::getIndices() const{
+    const WORD* Voxel::getIndices() const {
         return INDICES;
     }
+
 }
