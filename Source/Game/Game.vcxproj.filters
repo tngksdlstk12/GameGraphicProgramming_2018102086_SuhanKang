@@ -76,6 +76,9 @@
     <None Include="Shaders\SkinningShaders.fxh">
       <Filter>헤더 파일\Shaders</Filter>
     </None>
+    <None Include="Shaders\ShadowShaders.fxh">
+      <Filter>헤더 파일\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\PS.hlsl">

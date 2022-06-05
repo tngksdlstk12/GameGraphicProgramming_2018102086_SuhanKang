@@ -1,13 +1,5 @@
 #include "Cube/Cube.h"
 
-/*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
-  Method:   Cube::Cube
-
-  Summary:  Constructor
-
-  Args:     const std::filesystem::path& textureFilePath
-              Path to the texture to use
-M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 
 /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
   Method:   Cube::Cube
@@ -20,6 +12,21 @@ M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M---M-M*/
 Cube::Cube(_In_ const XMFLOAT4& outputColor)
     : BaseCube(outputColor)
 {
+}
+
+HRESULT Cube::Initialize(_In_ ID3D11Device* pDevice, _In_ ID3D11DeviceContext* pImmediateContext)
+{
+    BasicMeshEntry basicMeshEntry;
+    basicMeshEntry.uNumIndices = NUM_INDICES;
+
+    m_aMeshes.push_back(basicMeshEntry);
+
+    if (HasTexture())
+    {
+        SetMaterialOfMesh(0, 0);
+    }
+
+    return initialize(pDevice, pImmediateContext);
 }
 
 /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M
