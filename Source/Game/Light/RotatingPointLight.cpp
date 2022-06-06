@@ -1,8 +1,8 @@
 #include "Light/RotatingPointLight.h"
 
 
-RotatingPointLight::RotatingPointLight(_In_ const XMFLOAT4& position, _In_ const XMFLOAT4& color) :
-	PointLight(position, color)
+RotatingPointLight::RotatingPointLight(_In_ const XMFLOAT4& position, _In_ const XMFLOAT4& color, _In_ FLOAT attenuationDistance) :
+	PointLight(position, color, attenuationDistance)
 {}
 
 /*M+M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M+++M

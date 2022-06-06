@@ -12,6 +12,13 @@
 Texture2D aTextures[2] : register(t0);
 SamplerState aSamplers[2] : register (s0);
 
+struct StrPointLight
+{
+    float4 Position;
+    float4 Color;
+    float4 AttenuationDistance;
+};
+
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
@@ -52,8 +59,10 @@ cbuffer cbChangesEveryFrame : register(b2)
   Summary:  Constant buffer used for shading
 C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
 cbuffer cbLights : register(b3) {
-    float4 LightPositions[NUM_LIGHTS];
-    float4 LightColors[NUM_LIGHTS];
+    //float4 LightPositions[NUM_LIGHTS];
+    //float4 LightColors[NUM_LIGHTS];
+
+    StrPointLight PointLights[NUM_LIGHTS];
 }
 
 /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
@@ -145,14 +154,14 @@ float4 PSVoxel(PS_INPUT input) : SV_Target
     {
         ambient +=
             ambience * aTextures[0].Sample(aSamplers[0], input.TexCoord).xyz *
-            LightColors[i].xyz;
+            PointLights[i].Color.xyz;
 
 
-        float3 lightDirection = normalize(input.WorldPosition - LightPositions[i].xyz);
+        float3 lightDirection = normalize(input.WorldPosition - PointLights[i].Position.xyz);
         float3 lambertian = dot(normalize(normal), -lightDirection);
         diffuse +=
             saturate(lambertian) * aTextures[0].Sample(aSamplers[0], input.TexCoord).xyz *
-            LightColors[i].xyz;
+            PointLights[i].Color.xyz;
 
     }
     return float4(saturate(diffuse + ambient), 1);

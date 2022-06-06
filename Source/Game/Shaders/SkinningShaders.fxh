@@ -12,6 +12,12 @@ static const unsigned int MAX_NUM_BONES = 256u;
 Texture2D txDiffuse : register(t0);
 SamplerState samLinear : register (s0);
 
+struct StrPointLight
+{
+    float4 Position;
+    float4 Color;
+    float4 AttenuationDistance;
+};
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
 //--------------------------------------------------------------------------------------
@@ -52,8 +58,9 @@ cbuffer cbChangesEveryFrame : register(b2)
   Summary:  Constant buffer used for shading
 C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C---C-C*/
 cbuffer cbLights : register(b3) {
-    float4 LightPositions[NUM_LIGHTS];
-    float4 LightColors[NUM_LIGHTS];
+    //float4 LightPositions[NUM_LIGHTS];
+    //float4 LightColors[NUM_LIGHTS];
+    StrPointLight PointLights[NUM_LIGHTS];
 }
 
 /*C+C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C+++C
@@ -143,18 +150,26 @@ float4 PSSkinning(PS_SKINNING_INPUT input) : SV_Target
 
     for (uint i = 0; i < NUM_LIGHTS; ++i)
     {
+
+        float3 lightDistance = input.WorldPosition - PointLights[i].Position.xyz;
+        float squareDistance = dot(lightDistance, lightDistance);
+        float lightAttenation =
+            PointLights[i].AttenuationDistance.z
+            / (squareDistance + 0.000001f);
+
+
         ambient +=
-            ambience * txDiffuse.Sample(samLinear, input.TexCoord).rgb * LightColors[i].xyz;
+            ambience * txDiffuse.Sample(samLinear, input.TexCoord).rgb * PointLights[i].Color.xyz * lightAttenation;
 
 
-        float3 lightDirection = normalize(input.WorldPosition - LightPositions[i].xyz);
+        float3 lightDirection = normalize(input.WorldPosition - PointLights[i].Position.xyz);
         float3 lambertian = dot(normalize(input.Normal), -lightDirection);
         diffuse +=
-            saturate(lambertian) * txDiffuse.Sample(samLinear, input.TexCoord).rgb * LightColors[i].xyz;
+            saturate(lambertian) * txDiffuse.Sample(samLinear, input.TexCoord).rgb * PointLights[i].Color.xyz * lightAttenation;
 
         float3 reflectDirection = reflect(lightDirection, input.Normal);
-        specular += pow(saturate(dot(-viewDirection, reflectDirection)), 20.0f) * LightColors[i].xyz
-            * txDiffuse.Sample(samLinear, input.TexCoord).rgb;
+        specular += pow(saturate(dot(-viewDirection, reflectDirection)), 20.0f) * PointLights[i].Color.xyz
+            * txDiffuse.Sample(samLinear, input.TexCoord).rgb * lightAttenation;
 
     }
     return float4(saturate(diffuse + specular + ambient), 1);
